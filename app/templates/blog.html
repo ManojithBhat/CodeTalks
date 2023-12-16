@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="my-5">Blogs section</h3>
+
+    {% for post in posts.items %}
+        <!-- posts.items is due to pagination methods -->
+        <ul class="list-group mt-4">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><a href="{{ url_for('posts.post',post_id=post.id ) }}" class="article-title">{{post.title}}</a></div>
+                {{ post.description }}
+            </div>
+            <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username = post.author.username) }}" class="username_anchor_tag">{{ post.author.username }}</a> on {{ post.date_posted.strftime('%d-%m-%Y') }}</span>
+            </li>
+        </ul>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+        {% if page_num %}
+            {% if posts.page == page_num %}
+                <a class="btn btn-info my-4" href="{{ url_for('main.index',page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info my-4" href="{{ url_for('main.index',page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+<div class="col-md-4 ms-auto mt-5 list-group">
+    <div class="content-section">
+        <p class="text-muted">Dash Board
+            <ul class="list-group">
+                <li class="list-group-item">Latest Posts</li>
+                <li class="list-group-item">Announcements</li>
+                <li class="list-group-item">Calenders</li>
+                <li class="list-group-item">etc</li>
+            </ul>
+        </p>
+    </div>
+</div>
+{% endblock %} 

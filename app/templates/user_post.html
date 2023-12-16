@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="my-3">Posts by {{ user.username }} ({{ posts.total }})</h1>
+    {% for post in posts.items %}
+        <!-- posts.items is due to pagination methods -->
+        <ul class="list-group mt-4 ">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><a href="{{ url_for('posts.post',post_id=post.id ) }}" class="article-title">{{post.title}}</a></div>
+                    {{ post.description }}
+            </div>
+            <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username=post.author.username) }}" class="username_anchor_tag">{{ post.author.username }}</a> on {{ post.date_posted.strftime('%d-%m-%Y') }}</span>
+            </li>
+        </ul>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+        {% if page_num %}
+            {% if posts.page == page_num %}
+                <a class="btn btn-info my-4" href="{{ url_for('user.user_posts',username=user.username,page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info my-4" href="{{ url_for('user.user_posts',username=user.username,page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+
+    <h1 class="my-3">Question by {{ user.username }} ({{ questions.total }})</h1>
+    {% for question in questions.items %}
+    <!-- posts.items is due to pagination methods -->
+    <ul class="list-group mt-4">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold"><a href="{{ url_for('question.questions',post_id=question.id ) }}" class="article-title">{{question.title}}</a></div>
+            {{ question.description }}
+            <div class="d-flex flex-wrap">
+                {% for tag in question.tags.split(" ") %}
+                    <button type="button" class="btn btn-outline-primary my-3 py-1">{{ tag }}</button>
+                {% endfor %}
+            </div>
+        </div>
+        <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username =question.author.username) }}" class="username_anchor_tag">{{ question.author.username }}</a> on {{ question.date_posted.strftime('%d-%m-%Y') }}</span>
+    </li>
+    </ul>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+        {% if page_num %}
+            {% if posts.page == page_num %}
+                <a class="btn btn-info my-4" href="{{ url_for('user.user_posts',username=user.username,page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info my-4" href="{{ url_for('user.user_posts',username=user.username,page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+{% endblock %}

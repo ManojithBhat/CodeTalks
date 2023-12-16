@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="containers d-flex mt-5 flex-column justify-content-center ">
+        <h2 class="h2 text-center p-4">{{ question.title }}</h2>
+        <figcaption class="rgba(var(--bs-secondary-bg), .5) mt-1 d-flex justify-content-between ">
+            <span title="" class="badge bg-primary rounded-pill">{{ question.author.username }}</span>
+            <span class="badge bg-primary rounded-pill">Posted on {{ question.date_posted.strftime('%d-%m-%Y')  }}</span>
+        </figcaption>
+        
+        <hr>
+
+        <div class="mt-4">
+            {{ question_content|safe }}
+        </div>
+
+        <div class="my-3">
+            {% if question.author == current_user %}
+                <a href="{{ url_for('question.update',post_id=question.id) }}" class="btn btn-secondary btn-sm m-1">Update</a>
+                <button class="btn btn-danger btn-sm m-1" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="mt-5">
+    <h4 class="h4">Comments</h4>
+
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.body.label }}<br>
+            {{ form.body(class="orm-control my-3") }}<br>
+            {% for error in form.body.errors %}
+                <span class="text-danger">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        
+        {{ form.submit(class="mt-3 btn btn-outline-info") }}<br>
+    </form>
+</br>
+    
+        <div class="card my-2">
+        {% for comment in comments %}
+            <div class="card-body">
+                <h5 class="card-title">{{ comment.author.username }}</h5>
+                <p class="card-text">{{ comment.body |safe }}</p>
+                <p class="card-text"><small class="text-muted">{{ comment.datecreated.strftime('%d-%m-%Y') }}</small></p>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal-gives a pop up when selected on the deleter  -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Post? </h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            
+            <form action="{{ url_for('question.delete',post_id=question.id) }}" method="POST">
+                <input type="submit" class="btn btn-danger" value="Delete">
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+{% endblock %} 

@@ -1,0 +1,74 @@
+{% extends "base.html"%}
+{% block content %}
+    <div class="container mt-5">
+        <form action="" method="POST" >
+            {{ form.hidden_tag() }}  
+            <!-- adding csrf token -->
+
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                <div class="form-group mt-2 mb-2">
+                    {{ form.title.label(class="form-control-label") }}
+
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invlaid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    {{ form.description.label(class="form-control-label") }}
+
+                    {% if form.description.errors %}
+                        {{ form.description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invlaid-feedback">
+                            {% for error in form.description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.description(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    {{ form.topicTags.label(class="form-control-label") }}
+
+                    {% if form.topicTags.errors %}
+                        {{ form.topicTags(class="form-control form-control-lg is-invalid") }}
+                        <div class="invlaid-feedback">
+                            {% for error in form.topicTags.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.topicTags(class="form-control form-control-lg")}}
+                    {% endif %}
+                </div>
+                <div class="form-group mt-2 mb-2">
+                    {{ form.content.label(class="form-control-label") }}
+
+                    {% if form.content.errors %}
+                        {{ form.content(class="form-control form-control-lg is-invalid") }}
+                        <div class="invlaid-feedback">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.content(class="form-control form-control-lg ")}}
+                    {% endif %}
+                </div>
+                 
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="d-flex p-5 " role="search" method="POST" action="{{ url_for('posts.searched') }}">
+    {{ form.hidden_tag() }}
+<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+<button class="btn btn-outline-info" type="submit">Search</button>
+</form>
+
+{% if searched %}
+    <h3 class="h3 align-text">you searched for {{ searched }}</h3>
+{% endif %}
+
+{% for post in posts %}
+   
+    <ul class="list-group mt-4 ">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold"><a href="{{ url_for('posts.post',post_id=post.id ) }}" class="article-title">{{post.title}}</a></div>
+                {{ post.description }}
+        </div>
+        <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username=post.author.username) }}" class="username_anchor_tag">{{ post.author.username }}</a> on {{ post.date_posted.strftime('%d-%m-%Y') }}</span>
+        </li>
+    </ul>
+{% endfor %}
+
+{% for question in questions %}
+        <!-- posts.items is due to pagination methods -->
+            <ul class="list-group mt-4">
+                <li class="list-group-item d-flex  justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="{{ url_for('question.questions',post_id=question.id ) }}" class="article-title">{{question.title}}</a></div>
+                    {{ question.description }}
+                    <div class="d-flex flex-wrap">
+                        {% for tag in question.tags.split(" ") %}
+                            <button type="button" class="btn btn-outline-primary my-3 py-1">{{ tag }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username = question.author.username) }}" class="username_anchor_tag">{{ question.author.username }}</a> on {{ question.date_posted.strftime('%d-%m-%Y') }}</span>
+            </li>
+            </ul>
+ {% endfor %}
+
+{% endblock %}  

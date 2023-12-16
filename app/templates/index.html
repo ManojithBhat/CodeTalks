@@ -1,0 +1,81 @@
+{% include "base.html" %}
+{% block content %}
+
+<div id="main">
+    <div class="container">
+        <p id="tagline">Dive Into {Code}</p>
+        <p id="heading"> Uncover stories, ideas, and mastery from diverse minds at CodeTalks</p>
+        <button class=" btn-blog"><a href="{{ url_for('main.blog') }}">Blogs</a></button>
+        <button class=" btn-qna"><a href="{{ url_for('main.QnA') }}">Questions</a></button>
+    </div>
+</div>
+
+<section class="container" id="blog">
+<h3 class="py-3">Eplore Our Blogs</h3>
+<div class="row">
+    <div class="col-7">
+        {% for post in posts.items %}
+        <!-- posts.items is due to pagination methods -->
+        <ul class="list-group mt-4 container">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><a href="{{ url_for('posts.post',post_id=post.id ) }}" class="article-title">{{post.title}}</a></div>
+                {{ post.description }}
+            </div>
+            <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username = post.author.username) }}" class="username_anchor_tag">{{ post.author.username }}</a> on {{ post.date_posted.strftime('%d-%m-%Y') }}</span>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+
+    <div class="col-4 d-flex flex-column align-items-start px-5">
+        <p id="para-blog">Search through diverse programming topics from Kernel to Cloud and expland your knowledge. </p>
+        <div class=""><button class="btn btn-outline-info m-1 ">C++</button><button class="btn btn-outline-info m-1">Java</button><button class="btn btn-outline-info m-1">Data Structures</button></div>
+        <div><button class="btn btn-outline-info m-1">Algorithm</button><button class="btn btn-outline-info m-1">Docker</button><button class="btn btn-outline-info m-1">Kubernetes</button></div>
+        <a href="{{url_for('main.blog')}}" class="mt-4 btn btn-warning"> See More</a>
+    </div>
+</div>
+</section> 
+
+
+
+<section class="container">
+<h3 class="py-3">Give your Questions an answer</h3>
+
+<div class="row">
+
+    <div class="col-5 d-flex flex-column align-items-start py-5 pe-5">
+        <p id="para-blog">Ask Questions and get solutions from the expert coding community members.  </p>
+        
+        <a href="{{url_for('main.QnA')}}" class="mt-4 btn btn-warning">Latest Questions</a>
+    </div>
+    <div class="col-7">
+        {% for question in questions.items %}
+        <!-- posts.items is due to pagination methods -->
+            <ul class="list-group mt-4">
+                <li class="list-group-item d-flex  justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><a href="{{ url_for('question.questions',post_id=question.id ) }}" class="article-title">{{question.title}}</a></div>
+                    {{ question.description }}
+                    <div class="d-flex flex-wrap">
+                        {% for tag in question.tags.split(" ") %}
+                            <button type="button" class="btn btn-outline-primary my-3 py-1">{{ tag }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <span class="badge bg-primary rounded-pill">By <a href="{{ url_for('user.user_posts',username = question.author.username) }}" class="username_anchor_tag">{{ question.author.username }}</a> on {{ question.date_posted.strftime('%d-%m-%Y') }}</span>
+            </li>
+            </ul>
+        {% endfor %}
+    </div>
+
+
+</div>
+</section>
+
+{% endblock %} 
+
+
+
+
+

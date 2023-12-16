@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+{% block content %}
+
+    <header class="text-center m-4">
+        <h1 class="display-4">Welcome to CodeTalks!</h1>
+        <p class="lead">Your platform for coding discussions, blogs, and Q&A.</p>
+    </header>
+
+    <section id="about">
+        <h2 class="my-4">About Us</h2>
+        <p>
+            CodeTalks is a community-driven platform where coding enthusiasts can share their knowledge,
+            insights, and experiences. Whether you're passionate about programming languages, algorithms,
+            or software development in general, CodeTalks provides a space for you to connect with like-minded
+            individuals, learn new things, and help others on their coding journey.
+        </p>
+    </section>
+
+    <section id="blog-guidelines">
+        <h2 class="my-4">Writing Blogs</h2>
+        <p>
+            We encourage you to share your thoughts and expertise through blog posts. To maintain a consistent
+            and readable format, we use Markdown for writing blogs. Here are some guidelines:
+        </p>
+        <ul>
+            <li>Use Markdown syntax for formatting.</li>
+            <li>Include code snippets using backticks (<code>`</code>) for inline code and triple backticks (<code>```</code>) for blocks.</li>
+            <li>Add relevant images and links to enhance your content.</li>
+            <li>Headings: Use `#` for headings. (e.g., <code># Heading 1</code>, <code>## Heading 2</code>, etc.)</li>
+            <li>Lists: Create ordered or unordered lists using `1.`, `*`, or `-`.</li>
+            <li>Emphasis: Use `*italic*` or `**bold**` for emphasis.</li>
+            <li>Links: Create links using `[text](url)`.</li>
+            
+        </ul>
+    </section>
+
+    <section id="qna-guidelines">
+        <h2 class="my-4">Question and Answer Portal</h2>
+        <p>
+            The Q&A portal is designed for you to ask and answer coding-related questions. Whether you're
+            seeking help or offering assistance, please follow these guidelines:
+        </p>
+        <ul>
+            <li>Be clear and concise in your questions and answers.</li>
+            <li>Use proper code formatting to make your code snippets readable.</li>
+            <li>Upvote helpful answers and mark the best answer to your question.</li>
+            <li>Code Blocks: Wrap code blocks with triple backticks (<code>```</code>) for better readability.</li>
+            <li>Quotes: Use `> ` for block quotes.</li>
+            
+        </ul>
+    </section>
+
+
+
+{% endblock %}
